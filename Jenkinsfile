@@ -33,7 +33,7 @@ pipeline {
                     npm --version
 
                     echo "Install Dependencies"
-                    npm ci --legacy-peer-deps --no-audit --no-fund
+                    npm install --legacy-peer-deps --no-audit --no-fund
 
                     echo "Build"
                     npm run build
