@@ -22,11 +22,14 @@ pipeline {
             agent {
                 docker {
                     image 'node:22.11.0-alpine3.20'
-                    args '-u root -v /tmp/npm-cache:/root/.npm'
+                    args "-u root -v /tmp/npm-cache:/root/.npm -v ${WORKSPACE}:/app"
+                    reuseNode true
                 }
             }
             steps {
                 sh '''
+                    cd /app
+
                     echo "Node Version:"
                     node --version
                     echo "NPM Version:"
