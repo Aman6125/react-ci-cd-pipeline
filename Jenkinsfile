@@ -1,5 +1,10 @@
 pipeline {
     agent any
+
+    environment {
+        MY_VAR = "my value"
+    }
+
     options {
         skipDefaultCheckout(true)
         timestamps()
@@ -58,9 +63,11 @@ pipeline {
             steps {
                 sh '''
                     cd /app
-                    echo "Deploying to Vercel..."
+                    echo "Deploying..."
                     npm install -g vercel
-                    vercel --prod --token "$VERCEL_TOKEN"
+
+                    # Print environment variable value
+                    echo "MY_VAR = $MY_VAR"
                 '''
             }
         }
