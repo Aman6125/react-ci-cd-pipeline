@@ -46,14 +46,32 @@ pipeline {
                 '''
             }
         }
+
+        stage('Deploy') {
+            agent {
+                docker {
+                    image 'node:22.11.0-alpine3.20'
+                    args "-u root -v /tmp/npm-cache:/root/.npm -v ${WORKSPACE}:/app"
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    cd /app
+                    echo "Deploying to Vercel..."
+                    npm install -g vercel
+                    vercel --prod --token "$VERCEL_TOKEN"
+                '''
+            }
+        }
     }
 
     post {
         success {
-            echo "🎉 Build & Test completed successfully"
+            echo "🎉 Build, Test & Deploy completed successfully"
         }
         failure {
-            echo "❌ Build failed — check the logs above"
+            echo "❌ Pipeline failed — check the logs above"
         }
     }
 }
