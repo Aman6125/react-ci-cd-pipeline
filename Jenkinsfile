@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        MY_VAR = "my value"
+        NODE_ENV = 'test'
+        VERCEL_TOKEN = credentials("VERCEL_TOKEN")
     }
 
     options {
@@ -66,8 +67,9 @@ pipeline {
                     echo "Deploying..."
                     npm install -g vercel
 
-                    # Print environment variable value
-                    echo "MY_VAR = $MY_VAR"
+                    echo "VERCEL_TOKEN (masked) is set"
+
+                    vercel --prod --token "$VERCEL_TOKEN" --yes --confirm --name react-ci-cd-pipeline
                 '''
             }
         }
