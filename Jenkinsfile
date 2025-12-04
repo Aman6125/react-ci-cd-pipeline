@@ -23,6 +23,11 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Take permsion'){
+            steps{
+                input 'should we deploy?'
+            }
+        }
 
         stage('Build & Test inside Docker') {
             agent {
