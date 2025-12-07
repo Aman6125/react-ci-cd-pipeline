@@ -1,4 +1,4 @@
-pipeline {
+    pipeline {
     agent any
 
     environment {
@@ -68,7 +68,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    cd /app
+                    cd /app    
                     echo "Deploying..."
                     npm install -g vercel
 
